@@ -1,0 +1,12 @@
+{
+  "name": "kit-estudiantes-festival",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm --prefix festival-voluntarios run dev",
+    "build": "npm --prefix festival-voluntarios run build",
+    "sync": "npm --prefix festival-voluntarios run sync",
+    "test": "node pruebas/correr.mjs voluntarios http://localhost:3000"
+  }
+}

@@ -1,0 +1,15 @@
+node_modules/
+**/node_modules/
+.env
+**/.env
+dist/
+**/dist/
+.claude/
+**/.claude/
+.windsurf/
+**/.windsurf/
+.agents/
+**/.agents/
+skills-lock.json
+**/skills-lock.json
+.DS_Store
