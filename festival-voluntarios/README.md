@@ -12,10 +12,14 @@ API backend para la gestión de turnos de voluntarios del Festival Picnic 2026.
 
 ## Arquitectura de 4 Capas
 
-- `src/domain/`: Entidades y tipos del módulo.
-- `src/application/`: Casos de uso con las reglas de negocio.
-- `src/infrastructure/`: Repositorio Prisma y conexión a la base de datos.
-- `src/presentation/`: Rutas y controladores de Express.
+- `src/domain/`: Entidad `Turno`, tipos del módulo y contrato del repositorio.
+- `src/application/`: Casos de uso y reglas de negocio; depende del contrato del dominio.
+- `src/infrastructure/`: Implementación del repositorio con Prisma y conexión a PostgreSQL.
+- `src/presentation/`: Controladores y rutas HTTP de Express.
+- `src/app.ts`: Punto de composición que conecta las capas y arranca el servidor.
+
+El flujo de una petición es: ruta/controlador → caso de uso → contrato del dominio → repositorio Prisma.
+Las reglas de negocio no acceden directamente a Express ni a Prisma.
 
 ## Variables de Entorno (.env)
 
