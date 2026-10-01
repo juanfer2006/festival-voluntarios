@@ -52,7 +52,25 @@ export async function obtenerTurnoPorIdRepo(id: number) {
     },
   });
 }
-
+export async function crearTurnoRepo(datos: {
+  voluntario_id: number;
+  zona_id: number;
+  dia_id: number;
+  hora_inicio: string;
+  hora_fin: string;
+  rol: string;
+}) {
+  return prisma.turnos.create({
+    data: {
+      voluntario_id: datos.voluntario_id,
+      zona_id: datos.zona_id,
+      dia_id: datos.dia_id,
+      hora_inicio: datos.hora_inicio,
+      hora_fin: datos.hora_fin,
+      rol: datos.rol,
+    },
+  });
+}
 export async function existeZona(zonaId: number) {
   const zona = await prisma.zonas.findUnique({ where: { id: zonaId } });
   return zona !== null;

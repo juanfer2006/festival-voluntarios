@@ -2,6 +2,8 @@ import { Router } from 'express';
 import {
   obtenerHoras,
   listarTurnos,
+  obtenerTurno,
+  crearTurno,
 } from '../usecases/turnos.usecase.js';
 
 const router = Router();
@@ -27,6 +29,28 @@ router.get('/', async (req, res) => {
   try {
     const resultado = await listarTurnos(page, limit, filtros);
     res.json(resultado);
+  } catch (err: any) {
+    res.status(err.status || 500).json({
+      error: err.message || 'Error del servidor',
+    });
+  }
+});
+router.get('/:id', async (req, res) => {
+  const id = Number(req.params.id);
+
+  try {
+    const turno = await obtenerTurno(id);
+    res.json({ data: turno });
+  } catch (err: any) {
+    res.status(err.status || 500).json({
+      error: err.message || 'Error del servidor',
+    });
+  }
+});
+router.post('/', async (req, res) => {
+  try {
+    const turno = await crearTurno(req.body);
+    res.status(201).json({ data: turno });
   } catch (err: any) {
     res.status(err.status || 500).json({
       error: err.message || 'Error del servidor',
