@@ -277,4 +277,4 @@ export async function actualizarTurno(id: number, cambios: unknown) {
     throw { status: 409, message: 'El voluntario no puede trabajar más de 8 horas al día' };
   }
 }
-//alo
+//cambio
