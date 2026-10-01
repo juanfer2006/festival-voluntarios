@@ -75,3 +75,24 @@ export async function existeZona(zonaId: number) {
   const zona = await prisma.zonas.findUnique({ where: { id: zonaId } });
   return zona !== null;
 }
+export async function actualizarTurnoRepo(
+  id: number,
+  cambios: {
+    zona_id?: number;
+    dia_id?: number;
+    hora_inicio?: string;
+    hora_fin?: string;
+    rol?: string;
+  }
+) {
+  return prisma.turnos.update({
+    where: { id },
+    data: cambios,
+  });
+}
+export async function eliminarTurnoRepo(id: number) {
+  return prisma.turnos.update({
+    where: { id },
+    data: { state: 'REMOVED' },
+  });
+}

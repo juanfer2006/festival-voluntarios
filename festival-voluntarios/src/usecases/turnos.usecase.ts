@@ -6,6 +6,8 @@ import {
   listarTurnosRepo,
   obtenerTurnoPorIdRepo,
   crearTurnoRepo,
+  actualizarTurnoRepo,
+  eliminarTurnoRepo,
 } from '../repositories/turnos.repository.js';
 
 export async function obtenerHoras(voluntarioId: number, diaId: number) {
@@ -159,7 +161,8 @@ export async function crearTurno(datos: unknown) {
 
   if (minutosExistentes + (fin - inicio) > 8 * 60) {
     throw { status: 409, message: 'El voluntario no puede trabajar más de 8 horas al día' };
-    }
+  }
+
   return crearTurnoRepo({
     voluntario_id,
     zona_id,
@@ -276,4 +279,22 @@ export async function actualizarTurno(id: number, cambios: unknown) {
   if (minutosExistentes + (fin - inicio) > 8 * 60) {
     throw { status: 409, message: 'El voluntario no puede trabajar más de 8 horas al día' };
   }
+
+  return actualizarTurnoRepo(id, {
+    zona_id,
+    dia_id,
+    hora_inicio,
+    hora_fin,
+    rol,
+  });
+}
+export async function eliminarTurno(id: number) {
+  if (!Number.isInteger(id) || id <= 0) {
+    throw { status: 400, message: 'El id debe ser un entero positivo' };
+  }
+
+  // obtenerTurno devuelve 404 si no existe o ya fue eliminado.
+  await obtenerTurno(id);
+
+  return eliminarTurnoRepo(id);
 }

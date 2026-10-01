@@ -4,6 +4,8 @@ import {
   listarTurnos,
   obtenerTurno,
   crearTurno,
+  actualizarTurno,
+  eliminarTurno,
 } from '../usecases/turnos.usecase.js';
 
 const router = Router();
@@ -57,6 +59,31 @@ router.post('/', async (req, res) => {
     });
   }
 });
+router.patch('/:id', async (req, res) => {
+  const id = Number(req.params.id);
+
+  try {
+    const turno = await actualizarTurno(id, req.body);
+    res.json({ data: turno });
+  } catch (err: any) {
+    res.status(err.status || 500).json({
+      error: err.message || 'Error del servidor',
+    });
+  }
+});
+router.delete('/:id', async (req, res) => {
+  const id = Number(req.params.id);
+
+  try {
+    await eliminarTurno(id);
+    res.status(200).json({ message: 'Turno eliminado' });
+  } catch (err: any) {
+    res.status(err.status || 500).json({
+      error: err.message || 'Error del servidor',
+    });
+  }
+});
+
 router.get('/voluntario/:voluntarioId/horas', async (req, res) => {
   const voluntarioId = Number(req.params.voluntarioId);
   const diaId = Number(req.query.dia_id);
